@@ -1,0 +1,28 @@
+{
+  "name": "my-petlove-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node src/server.ts",
+    "dev": "cross-env NODE_ENV=development nodemon src/server.ts",
+    "lint": "eslint **/*.ts",
+    "lint:fix": "eslint --fix **/*.ts",
+    "test": "jest"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "mongoose": "^8.8.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.9.0",
+    "nodemon": "^3.1.7",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.6.3"
+  }
+}
