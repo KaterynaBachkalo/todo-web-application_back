@@ -1,8 +1,17 @@
 import { NextFunction, Request, Response } from "express";
-import catchAsync from "../utils/catchAsync";
+import userServices from "../services/userServices";
+import { catchAsync, HttpError, validSchemas } from "../utils";
 
 const checkRegistrationData = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
+    const { value, error } = validSchemas.addUserSchema.validate(req.body);
+
+    if (error) throw new HttpError(400, error.message);
+
+    await userServices.checkUserEmailExists(value.email);
+
+    req.body = value;
+
     next();
   }
 );
