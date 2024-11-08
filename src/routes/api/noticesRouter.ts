@@ -18,7 +18,7 @@ router
   .post(
     updateMiddlewares.checkFavoritesId,
     updateMiddlewares.checkAddFavorites,
-    updateControllers.postFavorites
+    updateControllers.addFavorites
   );
 
 router
