@@ -34,4 +34,4 @@ const addPetSchema = new Schema<IPet>(
   }
 );
 
-export const Pet = model<IPet>("AddPet", addPetSchema);
+export const AddPet = model<IPet>("AddPet", addPetSchema);

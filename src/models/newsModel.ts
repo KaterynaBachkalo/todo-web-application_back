@@ -17,4 +17,4 @@ const newsSchema = new Schema<INews>(
   }
 );
 
-export const Pet = model<INews>("News", newsSchema);
+export const News = model<INews>("News", newsSchema);

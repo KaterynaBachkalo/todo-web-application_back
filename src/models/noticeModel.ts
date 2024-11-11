@@ -48,4 +48,4 @@ const noticeSchema = new Schema<INotice>(
   }
 );
 
-export const Pet = model<INotice>("Notice", noticeSchema);
+export const Notice = model<INotice>("Notice", noticeSchema);

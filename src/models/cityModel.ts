@@ -25,4 +25,4 @@ const citySchema = new Schema<ICity>(
   }
 );
 
-export const Pet = model<ICity>("Notice", citySchema);
+export const City = model<ICity>("City", citySchema);
