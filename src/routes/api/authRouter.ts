@@ -20,25 +20,25 @@ router.post("/refresh-token", authControllers.refreshToken);
 
 router.use(authMiddlewares.protect);
 
-router.route("current").get(getAuthControllers.getCurrentUserInfo);
+router.route("/current").get(getAuthControllers.getCurrentUserInfo);
 
-router.route("current/full").get(getAuthControllers.getCurrentUserFullInfo);
+router.route("/current/full").get(getAuthControllers.getCurrentUserFullInfo);
 
 router
-  .route("current/edit")
+  .route("/current/edit")
   .patch(
     authMiddlewares.checkCurrentUser,
     updateAuthControllers.updateCurrentUser
   );
 
 router
-  .route("current/pets/add")
+  .route("/current/pets/add")
   .post(authMiddlewares.checkPetData, updateAuthControllers.addPet);
 
 router
-  .route("current/pets/remove/:id")
+  .route("/current/pets/remove/:id")
   .delete(updateAuthControllers.deletePetById);
 
-router.route("logout").post(authControllers.logout);
+router.route("/logout").post(authControllers.logout);
 
 export default router;
