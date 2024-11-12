@@ -59,7 +59,7 @@ const login = async ({ email, password }: LoginData) => {
   await User.findByIdAndUpdate(user.id, { accessToken, refreshToken });
 
   return {
-    user: { email: user.email },
+    user: { email: user.email, name: user.name },
     accessToken,
     refreshToken,
   };
