@@ -1,0 +1,349 @@
+[
+  {
+    "_id": "658b664c05a6bcd9b9379463",
+    "title": "Whiskas",
+    "url": "https://www.whiskas.ua/",
+    "addressUrl": null,
+    "imageUrl": "https://ftp.goit.study/img/petsfriends/8.webp",
+    "address": null,
+    "phone": "+380800500155",
+    "email": null,
+    "workDays": []
+  },
+  {
+    "_id": "658b664c05a6bcd9b9379462",
+    "title": "Purina",
+    "url": "https://www.purina.ua/",
+    "addressUrl": null,
+    "imageUrl": "https://ftp.goit.study/img/petsfriends/7.webp",
+    "address": null,
+    "workDays": null,
+    "phone": "+380800500950",
+    "email": "info@ua.nestle.com"
+  },
+  {
+    "_id": "658b664c05a6bcd9b9379461",
+    "title": "Lico",
+    "url": "https://lico.vet/",
+    "addressUrl": "https://goo.gl/maps/sub8u9TAAvLJRE9j9",
+    "imageUrl": "https://ftp.goit.study/img/petsfriends/6.webp",
+    "address": "77 Drugetiv Street, Uzhhorod, Transcarpathian region, 88003",
+    "workDays": [
+      {
+        "_id": "6734eb900a0375f38dc51722",
+        "isOpen": true,
+        "from": "09:00",
+        "to": "20:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc51723",
+        "isOpen": true,
+        "from": "09:00",
+        "to": "20:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc51724",
+        "isOpen": true,
+        "from": "09:00",
+        "to": "20:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc51725",
+        "isOpen": true,
+        "from": "09:00",
+        "to": "20:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc51726",
+        "isOpen": true,
+        "from": "09:00",
+        "to": "20:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc51727",
+        "isOpen": true,
+        "from": "09:00",
+        "to": "20:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc51728",
+        "isOpen": true,
+        "from": "09:00",
+        "to": "20:00"
+      }
+    ],
+    "phone": null,
+    "email": null
+  },
+  {
+    "_id": "658b664c05a6bcd9b937945e",
+    "title": "LKP “Lion”",
+    "url": "https://lkplev.com/",
+    "addressUrl": "https://goo.gl/maps/4xMfxtahHPfXeAYU8",
+    "imageUrl": "https://ftp.goit.study/img/petsfriends/3.webp",
+    "address": "56 Promyslova St., Lviv, 79024, Ukraine",
+    "workDays": [
+      {
+        "_id": "6734eb900a0375f38dc51729",
+        "isOpen": true,
+        "from": "08:00",
+        "to": "19:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc5172a",
+        "isOpen": true,
+        "from": "08:00",
+        "to": "19:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc5172b",
+        "isOpen": true,
+        "from": "08:00",
+        "to": "19:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc5172c",
+        "isOpen": true,
+        "from": "08:00",
+        "to": "19:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc5172d",
+        "isOpen": true,
+        "from": "08:00",
+        "to": "19:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc5172e",
+        "isOpen": true,
+        "from": "08:00",
+        "to": "19:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc5172f",
+        "isOpen": true,
+        "from": "08:00",
+        "to": "19:00"
+      }
+    ],
+    "phone": "+380685354545",
+    "email": "lkplev@gmail.com"
+  },
+  {
+    "_id": "658b664c05a6bcd9b937945f",
+    "title": "PetHelp",
+    "url": "https://pethelp.com.ua/interv_yu_z_zasnovnitseyu_pritulku_velike_sertse/",
+    "addressUrl": null,
+    "imageUrl": "https://ftp.goit.study/img/petsfriends/4.webp",
+    "address": null,
+    "workDays": null,
+    "phone": null,
+    "email": "pethelp.ukr@gmail.com"
+  },
+  {
+    "_id": "658b664c05a6bcd9b937945d",
+    "title": "Happy Paw",
+    "url": "https://happypaw.ua/ua",
+    "addressUrl": "https://goo.gl/maps/3RyzTYBvMr9WQWCC6",
+    "imageUrl": "https://ftp.goit.study/img/petsfriends/2.webp",
+    "address": "44 Shota Rustaveli Street, Kyiv (3rd floor, office 7)",
+    "workDays": [
+      {
+        "_id": "6734eb900a0375f38dc51730",
+        "isOpen": true,
+        "from": "09:00",
+        "to": "17:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc51731",
+        "isOpen": true,
+        "from": "09:00",
+        "to": "17:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc51732",
+        "isOpen": true,
+        "from": "09:00",
+        "to": "17:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc51733",
+        "isOpen": true,
+        "from": "09:00",
+        "to": "17:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc51734",
+        "isOpen": true,
+        "from": "09:00",
+        "to": "17:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc51735",
+        "isOpen": true,
+        "from": "09:00",
+        "to": "17:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc51736",
+        "isOpen": true,
+        "from": "09:00",
+        "to": "17:00"
+      }
+    ],
+    "phone": "+380442900329",
+    "email": "hello@happypaw.ua"
+  },
+  {
+    "_id": "658b664c05a6bcd9b9379460",
+    "title": "Barbos",
+    "url": "https://uk-ua.facebook.com/NGO.Barbos/",
+    "addressUrl": "https://goo.gl/maps/pnzYL8t7jbG7j1SQ9",
+    "imageUrl": "https://ftp.goit.study/img/petsfriends/5.webp",
+    "address": "Uzhhorod",
+    "workDays": [
+      {
+        "_id": "6734eb900a0375f38dc51737",
+        "isOpen": true,
+        "from": "08:00",
+        "to": "19:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc51738",
+        "isOpen": true,
+        "from": "08:00",
+        "to": "19:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc51739",
+        "isOpen": true,
+        "from": "08:00",
+        "to": "19:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc5173a",
+        "isOpen": true,
+        "from": "08:00",
+        "to": "19:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc5173b",
+        "isOpen": true,
+        "from": "08:00",
+        "to": "19:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc5173c",
+        "isOpen": true,
+        "from": "08:00",
+        "to": "19:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc5173d",
+        "isOpen": true,
+        "from": "08:00",
+        "to": "19:00"
+      }
+    ],
+    "phone": "+380664880480",
+    "email": null
+  },
+  {
+    "_id": "658b664c05a6bcd9b9379464",
+    "title": "Josera",
+    "url": "https://josera.ua/",
+    "addressUrl": null,
+    "imageUrl": "https://ftp.goit.study/img/petsfriends/9.webp",
+    "address": null,
+    "workDays": [
+      {
+        "_id": "6734eb900a0375f38dc5173e",
+        "isOpen": true,
+        "from": "09:00",
+        "to": "17:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc5173f",
+        "isOpen": true,
+        "from": "09:00",
+        "to": "17:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc51740",
+        "isOpen": true,
+        "from": "09:00",
+        "to": "17:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc51741",
+        "isOpen": true,
+        "from": "09:00",
+        "to": "17:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc51742",
+        "isOpen": true,
+        "from": "09:00",
+        "to": "17:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc51743",
+        "isOpen": false,
+        "from": "",
+        "to": ""
+      },
+      {
+        "_id": "6734eb900a0375f38dc51744",
+        "isOpen": false,
+        "from": "",
+        "to": ""
+      }
+    ],
+    "phone": "+380800409060",
+    "email": "info@josera.ua"
+  },
+  {
+    "_id": "658b664c05a6bcd9b937945c",
+    "title": "Sirius",
+    "url": "https://dogcat.com.ua",
+    "addressUrl": "https://goo.gl/maps/iq8NXEUf31EAQCzc6",
+    "imageUrl": "https://ftp.goit.study/img/petsfriends/1.webp",
+    "address": "Fedorivka, Kyiv Oblast, Ukraine, 07372",
+    "workDays": [
+      {
+        "_id": "6734eb900a0375f38dc51745",
+        "isOpen": false
+      },
+      {
+        "_id": "6734eb900a0375f38dc51746",
+        "isOpen": false
+      },
+      {
+        "_id": "6734eb900a0375f38dc51747",
+        "isOpen": false
+      },
+      {
+        "_id": "6734eb900a0375f38dc51748",
+        "isOpen": false
+      },
+      {
+        "_id": "6734eb900a0375f38dc51749",
+        "isOpen": false
+      },
+      {
+        "_id": "6734eb900a0375f38dc5174a",
+        "isOpen": true,
+        "from": "11:00",
+        "to": "16:00"
+      },
+      {
+        "_id": "6734eb900a0375f38dc5174b",
+        "isOpen": true,
+        "from": "11:00",
+        "to": "16:00"
+      }
+    ],
+    "phone": "+380931934069",
+    "email": "dogcat.sirius@gmail.com"
+  }
+]
