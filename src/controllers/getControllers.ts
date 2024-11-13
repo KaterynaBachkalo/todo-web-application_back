@@ -1,7 +1,19 @@
 import { Request, Response } from "express";
 import catchAsync from "../utils/catchAsync";
+import { petServices } from "../services";
 
-const getNotices = catchAsync(async (req: Request, res: Response) => {});
+const getNotices = catchAsync(async (req: Request, res: Response) => {
+  const { notices, totalPages, page, limit } = await petServices.getNotices(
+    req.query
+  );
+
+  res.status(200).json({
+    notices,
+    totalPages,
+    page,
+    limit,
+  });
+});
 
 const getNoticeCategories = catchAsync(
   async (req: Request, res: Response) => {}
@@ -19,9 +31,26 @@ const getCitiesLocations = catchAsync(
   async (req: Request, res: Response) => {}
 );
 
-const getFriends = catchAsync(async (req: Request, res: Response) => {});
+const getFriends = catchAsync(async (req: Request, res: Response) => {
+  const { friends } = await petServices.getFriends();
 
-const getNews = catchAsync(async (req: Request, res: Response) => {});
+  res.status(200).json({
+    friends,
+  });
+});
+
+const getNews = catchAsync(async (req: Request, res: Response) => {
+  const { news, totalPages, page, limit } = await petServices.getNews(
+    req.query
+  );
+
+  res.status(200).json({
+    news,
+    totalPages,
+    page,
+    limit,
+  });
+});
 
 export default {
   getNotices,
