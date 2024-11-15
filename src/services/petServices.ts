@@ -1,10 +1,5 @@
 import { Friend, News, Notice } from "../models";
-
-interface QueryParams {
-  title?: string;
-  page?: number;
-  limit?: number;
-}
+import { QueryParams } from "../types";
 
 // PAGINATION FEATURE =============================
 const pagination = (dbQuery: any, query: QueryParams) => {

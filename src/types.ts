@@ -70,3 +70,9 @@ export interface INews {
   url: string;
   id: string;
 }
+
+export interface QueryParams {
+  title?: string | null;
+  page?: number;
+  limit?: number;
+}
