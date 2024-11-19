@@ -11,7 +11,7 @@ const addPetSchema = new Schema<IPet>(
       type: String,
       required: [true, "Set title of pet"],
     },
-    imageURL: {
+    imgUrl: {
       type: String,
       required: [true, "Set image of pet"],
     },
