@@ -15,7 +15,7 @@ export interface IUser {
 export interface INotice {
   name: string;
   title: string;
-  imageURL: string;
+  imgURL: string;
   species: string;
   birthday: string;
   sex: string;
@@ -30,7 +30,7 @@ export interface INotice {
 export interface IPet {
   name: string;
   title: string;
-  imageURL: string;
+  imgUrl: string;
   species: string;
   birthday: string;
   sex: string;
@@ -48,8 +48,8 @@ export interface IFriend {
   _id: string;
   title: string;
   url: string;
-  addressURL: string;
-  imageURL: string;
+  addressUrl: string;
+  imageUrl: string;
   address: string;
   workDays: Array<{
     _id: string;
@@ -63,7 +63,7 @@ export interface IFriend {
 
 export interface INews {
   _id: string;
-  imageURL: string;
+  imgUrl: string;
   title: string;
   text: string;
   date: string;
