@@ -4,7 +4,7 @@ import { INews } from "../types";
 const newsSchema = new Schema<INews>(
   {
     _id: { type: String },
-    imageURL: { type: String },
+    imgUrl: { type: String },
     title: { type: String },
     text: { type: String },
     date: { type: String },

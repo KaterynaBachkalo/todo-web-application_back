@@ -6,8 +6,8 @@ const friendSchema = new Schema<IFriend>(
     _id: { type: String },
     title: { type: String },
     url: { type: String },
-    addressURL: { type: String },
-    imageURL: { type: String },
+    addressUrl: { type: String },
+    imageUrl: { type: String },
     address: { type: String },
     workDays: [
       {

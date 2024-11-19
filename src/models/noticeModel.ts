@@ -9,7 +9,7 @@ const noticeSchema = new Schema<INotice>(
     title: {
       type: String,
     },
-    imageURL: {
+    imgURL: {
       type: String,
     },
     species: {
