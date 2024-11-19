@@ -29,11 +29,11 @@ const getNews = async (query: QueryParams) => {
 
   const news = await newsQuery;
 
-  const totalPages = await News.countDocuments(findOptions);
+  const totalNews = await News.countDocuments(findOptions);
 
   return {
     news,
-    totalPages,
+    totalNews,
     page,
     limit,
   };
@@ -69,11 +69,11 @@ const getNotices = async (query: QueryParams) => {
 
   const notices = await noticeQuery;
 
-  const totalPages = await Notice.countDocuments(findOptions);
+  const totalNotices = await Notice.countDocuments(findOptions);
 
   return {
     notices,
-    totalPages,
+    totalNotices,
     page,
     limit,
   };
