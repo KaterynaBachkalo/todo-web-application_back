@@ -7,7 +7,7 @@
     "imageUrl": "https://ftp.goit.study/img/petsfriends/8.webp",
     "address": null,
     "phone": "+380800500155",
-    "email": null,
+    "email": "whiskas@gmail.com",
     "workDays": []
   },
   {
@@ -73,7 +73,7 @@
       }
     ],
     "phone": null,
-    "email": null
+    "email": "lico@gmail.com"
   },
   {
     "_id": "658b664c05a6bcd9b937945e",
@@ -246,7 +246,7 @@
       }
     ],
     "phone": "+380664880480",
-    "email": null
+    "email": "barbos@gmail.com"
   },
   {
     "_id": "658b664c05a6bcd9b9379464",
