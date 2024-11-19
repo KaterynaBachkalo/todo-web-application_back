@@ -3,13 +3,13 @@ import catchAsync from "../utils/catchAsync";
 import { petServices } from "../services";
 
 const getNotices = catchAsync(async (req: Request, res: Response) => {
-  const { notices, totalPages, page, limit } = await petServices.getNotices(
+  const { notices, totalNotices, page, limit } = await petServices.getNotices(
     req.query
   );
 
   res.status(200).json({
     notices,
-    totalPages,
+    totalNotices,
     page,
     limit,
   });
@@ -40,13 +40,11 @@ const getFriends = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getNews = catchAsync(async (req: Request, res: Response) => {
-  const { news, totalPages, page, limit } = await petServices.getNews(
-    req.query
-  );
+  const { news, totalNews, page, limit } = await petServices.getNews(req.query);
 
   res.status(200).json({
     news,
-    totalPages,
+    totalNews,
     page,
     limit,
   });
