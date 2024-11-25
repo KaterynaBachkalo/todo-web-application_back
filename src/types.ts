@@ -75,4 +75,6 @@ export interface QueryParams {
   title?: string | null;
   page?: number;
   limit?: number;
+  category?: string;
+  species?: string;
 }
