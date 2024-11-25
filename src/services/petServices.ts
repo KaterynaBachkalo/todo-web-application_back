@@ -22,6 +22,7 @@ const getNews = async (query: QueryParams) => {
           title: new RegExp(query.title, "i"), // Case-insensitive partial search
         }
       : {};
+
   // INIT DB QUERY ================================
   const newsQuery = News.find(findOptions);
 
@@ -53,16 +54,25 @@ const getFriends = async () => {
 const getNotices = async (query: QueryParams) => {
   // SEARCH FEATURE =====================================
 
-  const findOptions =
-    typeof query.title === "string" && query.title.trim() !== ""
-      ? {
-          title: new RegExp(query.title, "i"),
-        }
-      : {};
+  const findOptions: Record<string, unknown> = {};
+
+  // Фільтрація по title
+  if (typeof query.title === "string" && query.title.trim() !== "") {
+    findOptions.title = new RegExp(query.title, "i");
+  }
+
+  // Фільтрація по category
+  if (typeof query.category === "string" && query.category.trim() !== "") {
+    findOptions.category = query.category; // Пряма відповідність
+  }
+
+  // Фільтрація по species
+  if (typeof query.species === "string" && query.species.trim() !== "") {
+    findOptions.species = query.species; // Пряма відповідність
+  }
 
   // INIT DB QUERY ================================
 
-  console.log(findOptions);
   const noticeQuery = Notice.find(findOptions);
 
   const { page, limit } = pagination(noticeQuery, query);
