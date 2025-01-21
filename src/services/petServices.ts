@@ -63,17 +63,32 @@ const getNotices = async (query: QueryParams) => {
 
   // Фільтрація по category
   if (typeof query.category === "string" && query.category.trim() !== "") {
-    findOptions.category = query.category; // Пряма відповідність
+    findOptions.category = query.category;
+  }
+
+  // Фільтрація по sex
+  if (typeof query.sex === "string" && query.sex.trim() !== "") {
+    findOptions.sex = query.sex;
   }
 
   // Фільтрація по species
   if (typeof query.species === "string" && query.species.trim() !== "") {
-    findOptions.species = query.species; // Пряма відповідність
+    findOptions.species = query.species;
   }
 
   // INIT DB QUERY ================================
 
-  const noticeQuery = Notice.find(findOptions);
+  let noticeQuery = Notice.find(findOptions);
+
+  // Сортування
+  console.log(query);
+  if (query.sort === "popularity" || query.sort === "unpopularity") {
+    const sortOrder = query.sort === "popularity" ? -1 : 1;
+    noticeQuery = noticeQuery.sort({ popularity: sortOrder });
+  } else if (query.sort === "cheap" || query.sort === "expensive") {
+    const sortOrder = query.sort === "expensive" ? -1 : 1;
+    noticeQuery = noticeQuery.sort({ price: sortOrder });
+  }
 
   const { page, limit } = pagination(noticeQuery, query);
 
