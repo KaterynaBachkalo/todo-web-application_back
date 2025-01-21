@@ -76,5 +76,7 @@ export interface QueryParams {
   page?: number;
   limit?: number;
   category?: string;
+  sex?: string;
   species?: string;
+  sort?: string;
 }
