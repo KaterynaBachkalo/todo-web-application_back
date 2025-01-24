@@ -81,7 +81,6 @@ const getNotices = async (query: QueryParams) => {
   let noticeQuery = Notice.find(findOptions);
 
   // Сортування
-  console.log(query);
   if (query.sort === "popular" || query.sort === "unpopular") {
     const sortOrder = query.sort === "popular" ? -1 : 1;
     noticeQuery = noticeQuery.sort({ popularity: sortOrder });
