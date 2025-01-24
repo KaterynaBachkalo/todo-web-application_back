@@ -20,7 +20,9 @@ const login = catchAsync(async (req: Request, res: Response) => {
   );
 
   res.status(200).json({
-    user: { email: user.email, name: user.name, accessToken, refreshToken },
+    user: { email: user.email, name: user.name },
+    accessToken,
+    refreshToken,
   });
 });
 
