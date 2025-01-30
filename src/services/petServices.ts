@@ -1,5 +1,6 @@
-import { Friend, News, Notice } from "../models";
+import { Favorite, Friend, News, Notice } from "../models";
 import { QueryParams } from "../types";
+import { HttpError } from "../utils";
 
 // PAGINATION FEATURE =============================
 const pagination = (dbQuery: any, query: QueryParams) => {
