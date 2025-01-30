@@ -10,6 +10,7 @@ export interface IUser {
   ): Promise<boolean>;
   phone?: string;
   avatar?: string;
+  favorites?: string;
 }
 
 export interface INotice {
@@ -79,4 +80,9 @@ export interface QueryParams {
   sex?: string;
   species?: string;
   sort?: string;
+}
+
+export interface IFavorite {
+  _id: string;
+  owner: IUser;
 }
