@@ -15,11 +15,7 @@ router.route("/species").get(getControllers.getNoticeSpecies);
 
 router
   .route("/favorites/add/:id")
-  .post(
-    updateMiddlewares.checkFavoritesId,
-    updateMiddlewares.checkAddFavorites,
-    updateControllers.addFavorites
-  );
+  .post(updateMiddlewares.checkFavoritesId, updateControllers.addFavorites);
 
 router
   .route("/favorites/remove/:id")
