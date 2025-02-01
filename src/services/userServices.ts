@@ -1,3 +1,4 @@
+import { ObjectId } from "mongoose";
 import serverConfig from "../configs/serverConfig";
 import { User } from "../models/userModel";
 import HttpError from "../utils/HttpError";
@@ -65,8 +66,23 @@ const login = async ({ email, password }: LoginData) => {
   };
 };
 
+const updateFavoriteId = async (userId: ObjectId, id: string) => {
+  const user = await User.findByIdAndUpdate(
+    userId,
+    { $addToSet: { favorites: id } }, // `addToSet` не дозволяє дублювати значення
+    { new: true }
+  );
+
+  if (!user) {
+    throw new HttpError(404, "User not found");
+  }
+
+  return user.favorites;
+};
+
 export default {
   checkUserEmailExists,
   registration,
   login,
+  updateFavoriteId,
 };
