@@ -10,14 +10,18 @@ interface CustomRequest extends Request {
   user: { _id: ObjectId; email: string; name: string; favorites: string };
 }
 
+const checkAuthorization = (userId: ObjectId) => {
+  if (!userId) {
+    throw new HttpError(401, "Unauthorized");
+  }
+};
+
 const addFavorites = catchAsync(async (req: CustomRequest, res: Response) => {
   const { id } = req.params;
 
   const userId = req.user._id;
 
-  if (!userId) {
-    throw new HttpError(401, "Unauthorized");
-  }
+  checkAuthorization(userId);
 
   const favorites = await userServices.updateFavoriteId(userId, id);
 
@@ -32,9 +36,7 @@ const deleteFavorites = catchAsync(
 
     const userId = req.user._id;
 
-    if (!userId) {
-      throw new HttpError(401, "Unauthorized");
-    }
+    checkAuthorization(userId);
 
     await userServices.updateFavoriteId(userId, id);
 
