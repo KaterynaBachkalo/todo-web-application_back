@@ -5,7 +5,7 @@ import { userServices } from "../services";
 import { catchAsync } from "../utils";
 
 interface CustomRequest extends Request {
-  user: { _id: ObjectId; email: string; name: string };
+  user: { _id: ObjectId; email: string; name: string; favorites: string[] };
 }
 
 const registration = catchAsync(async (req: Request, res: Response) => {
@@ -14,13 +14,13 @@ const registration = catchAsync(async (req: Request, res: Response) => {
   res.status(201).json({ user: { email: user.email, name: user.name } });
 });
 
-const login = catchAsync(async (req: Request, res: Response) => {
+const login = catchAsync(async (req: CustomRequest, res: Response) => {
   const { user, accessToken, refreshToken } = await userServices.login(
     req.body
   );
 
   res.status(200).json({
-    user: { email: user.email, name: user.name },
+    user: { email: user.email, name: user.name, favorites: user.favorites },
     accessToken,
     refreshToken,
   });
