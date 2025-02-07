@@ -15,6 +15,7 @@ interface registrationData {
 interface LoginData {
   email: string;
   password: string;
+  favorites: string[];
 }
 
 const checkUserEmailExists = async (email: string) => {
@@ -60,7 +61,7 @@ const login = async ({ email, password }: LoginData) => {
   await User.findByIdAndUpdate(user.id, { accessToken, refreshToken });
 
   return {
-    user: { email: user.email, name: user.name },
+    user: { email: user.email, name: user.name, favorites: user.favorites },
     accessToken,
     refreshToken,
   };
