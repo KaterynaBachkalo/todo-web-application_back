@@ -27,6 +27,7 @@ const userSchema = new Schema<IUser>(
     },
     avatar: {
       type: String,
+      default: "",
     },
     favorites: {
       type: [],
