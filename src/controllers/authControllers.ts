@@ -5,7 +5,13 @@ import { userServices } from "../services";
 import { catchAsync } from "../utils";
 
 interface CustomRequest extends Request {
-  user: { _id: ObjectId; email: string; name: string; favorites: string[] };
+  user: {
+    _id: ObjectId;
+    email: string;
+    name: string;
+    favorites: string[];
+    avatar: string;
+  };
 }
 
 const registration = catchAsync(async (req: Request, res: Response) => {
@@ -20,7 +26,12 @@ const login = catchAsync(async (req: CustomRequest, res: Response) => {
   );
 
   res.status(200).json({
-    user: { email: user.email, name: user.name, favorites: user.favorites },
+    user: {
+      email: user.email,
+      name: user.name,
+      favorites: user.favorites,
+      avatar: user.avatar,
+    },
     accessToken,
     refreshToken,
   });
