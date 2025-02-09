@@ -11,6 +11,7 @@ interface CustomRequest extends Request {
     name: string;
     favorites: string[];
     avatar: string;
+    phone: number;
   };
 }
 
@@ -31,6 +32,7 @@ const login = catchAsync(async (req: CustomRequest, res: Response) => {
       name: user.name,
       favorites: user.favorites,
       avatar: user.avatar,
+      phone: user.phone,
     },
     accessToken,
     refreshToken,
