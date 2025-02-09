@@ -23,7 +23,8 @@ const userSchema = new Schema<IUser>(
       type: String,
     },
     phone: {
-      type: String,
+      type: Number,
+      default: null,
     },
     avatar: {
       type: String,
