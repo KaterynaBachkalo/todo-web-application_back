@@ -17,6 +17,7 @@ interface LoginData {
   password: string;
   favorites: string[];
   avatar: string;
+  phone: number;
 }
 
 const checkUserEmailExists = async (email: string) => {
@@ -67,6 +68,7 @@ const login = async ({ email, password }: LoginData) => {
       name: user.name,
       favorites: user.favorites,
       avatar: user.avatar,
+      phone: user.phone,
     },
     accessToken,
     refreshToken,
