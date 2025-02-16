@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { User } from "../models";
 import { ObjectId } from "mongodb";
-import { userServices } from "../services";
-import { catchAsync } from "../utils";
+import { userServices, createAvatar } from "../services";
+import { catchAsync, HttpError } from "../utils";
 
 interface CustomRequest extends Request {
   user: {
@@ -49,9 +49,26 @@ const logout = catchAsync(async (req: CustomRequest, res: Response) => {
   res.status(204).json();
 });
 
+const updateAvatar = catchAsync(async (req: CustomRequest, res: Response) => {
+  const { _id } = req.user;
+
+  if (!req.file) {
+    throw new HttpError(400, "Please, upload the image");
+  }
+
+  const avatar = await createAvatar(req.user, req.file);
+
+  await User.findByIdAndUpdate(_id, { avatar });
+
+  res.status(200).json({
+    avatar,
+  });
+});
+
 export default {
   registration,
   login,
   refreshToken,
   logout,
+  updateAvatar,
 };
