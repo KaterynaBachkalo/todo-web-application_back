@@ -5,6 +5,7 @@ import {
   getAuthControllers,
   updateAuthControllers,
 } from "../../controllers";
+import { upload } from "../../services/avatarServices";
 
 const router = express.Router();
 
@@ -30,6 +31,8 @@ router
     authMiddlewares.checkCurrentUser,
     updateAuthControllers.updateCurrentUser
   );
+
+router.patch("/avatars", upload.single("avatar"), authControllers.updateAvatar);
 
 router
   .route("/current/pets/add")
