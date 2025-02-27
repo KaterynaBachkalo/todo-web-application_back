@@ -1,4 +1,5 @@
 import Joi from "joi";
+import { title } from "process";
 
 const addUserSchema = Joi.object({
   name: Joi.string().min(1).allow("").default("NONAME"),
@@ -13,6 +14,23 @@ const addUserSchema = Joi.object({
     .messages({ "any.required": "Set email for user" }),
 });
 
+const updateUserSchema = Joi.object({
+  name: Joi.string().min(1).allow(""),
+
+  phone: Joi.number(),
+});
+
+const addPetSchema = Joi.object({
+  name: Joi.string().min(1),
+  title: Joi.string().min(1),
+  birthday: Joi.string().min(10).max(10),
+  species: Joi.string(),
+  sex: Joi.string(),
+  imgURL: Joi.object(),
+});
+
 export default {
   addUserSchema,
+  updateUserSchema,
+  addPetSchema,
 };
