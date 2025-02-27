@@ -1,6 +1,6 @@
-import { Favorite, Friend, News, Notice } from "../models";
-import { QueryParams } from "../types";
-import { HttpError } from "../utils";
+import { ObjectId } from "mongoose";
+import { AddPet, Friend, News, Notice } from "../models";
+import { IMyPet, IPet, QueryParams } from "../types";
 
 // PAGINATION FEATURE =============================
 const pagination = (dbQuery: any, query: QueryParams) => {
@@ -104,8 +104,15 @@ const getNotices = async (query: QueryParams) => {
   };
 };
 
+const addPet = async (userId: string, petData: IPet) => {
+  const newPet = await AddPet.create({ owner: userId, ...petData });
+
+  return newPet;
+};
+
 export default {
   getNews,
   getFriends,
   getNotices,
+  addPet,
 };
