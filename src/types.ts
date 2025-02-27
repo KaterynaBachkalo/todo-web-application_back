@@ -11,6 +11,7 @@ export interface IUser {
   phone?: string;
   avatar?: string;
   favorites?: string;
+  myPets?: IPet[];
 }
 
 export interface INotice {
@@ -31,10 +32,21 @@ export interface INotice {
 export interface IPet {
   name: string;
   title: string;
-  imgUrl: string;
+  imgURL: string;
   species: string;
   birthday: string;
   sex: string;
+}
+
+export interface IMyPet {
+  _id: string;
+  name: string;
+  title: string;
+  imgURL: File;
+  species: string;
+  birthday: string;
+  sex: string;
+  owner: IUser;
 }
 
 export interface ICity {
