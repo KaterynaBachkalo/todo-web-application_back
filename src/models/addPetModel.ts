@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
-import { IPet } from "../types";
+import { IMyPet } from "../types";
 
-const addPetSchema = new Schema<IPet>(
+const addPetSchema = new Schema<IMyPet>(
   {
     name: {
       type: String,
@@ -11,7 +11,7 @@ const addPetSchema = new Schema<IPet>(
       type: String,
       required: [true, "Set title of pet"],
     },
-    imgUrl: {
+    imgURL: {
       type: String,
       required: [true, "Set image of pet"],
     },
@@ -27,6 +27,11 @@ const addPetSchema = new Schema<IPet>(
       type: String,
       required: [true, "Set sex of pet"],
     },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
   {
     versionKey: false,
@@ -34,4 +39,4 @@ const addPetSchema = new Schema<IPet>(
   }
 );
 
-export const AddPet = model<IPet>("AddPet", addPetSchema);
+export const AddPet = model<IMyPet>("AddPet", addPetSchema);
