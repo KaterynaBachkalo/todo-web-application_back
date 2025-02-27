@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import catchAsync from "../utils/catchAsync";
 import { ObjectId } from "mongoose";
+import { IMyPet } from "../types";
 
 interface CustomRequest extends Request {
   user: {
@@ -10,21 +11,17 @@ interface CustomRequest extends Request {
     favorites: string[];
     avatar: string;
     phone: number;
+    myPets: IMyPet[];
   };
 }
 
 const getCurrentUserInfo = catchAsync(
   async (req: CustomRequest, res: Response) => {
-    const { email, name, favorites, avatar, phone } = req.user;
-    res.status(200).json({ email, name, favorites, avatar, phone });
+    const { email, name, favorites, avatar, phone, myPets } = req.user;
+    res.status(200).json({ email, name, favorites, avatar, phone, myPets });
   }
-);
-
-const getCurrentUserFullInfo = catchAsync(
-  async (req: Request, res: Response) => {}
 );
 
 export default {
   getCurrentUserInfo,
-  getCurrentUserFullInfo,
 };
