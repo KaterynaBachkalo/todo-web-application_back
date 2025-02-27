@@ -58,12 +58,24 @@ const protect = catchAsync(
 
 const checkCurrentUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
+    const { value, error } = validSchemas.updateUserSchema.validate(req.body);
+
+    if (error) throw new HttpError(400, error.message);
+
+    req.body = value;
+
     next();
   }
 );
 
 const checkPetData = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
+    const { value, error } = validSchemas.addPetSchema.validate(req.body);
+
+    if (error) throw new HttpError(400, error.message);
+
+    req.body = value;
+    console.log(req.body);
     next();
   }
 );
