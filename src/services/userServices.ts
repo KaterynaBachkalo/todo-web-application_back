@@ -3,6 +3,7 @@ import serverConfig from "../configs/serverConfig";
 import { User } from "../models/userModel";
 import HttpError from "../utils/HttpError";
 import jwt from "jsonwebtoken";
+import { IMyPet, IPet } from "../types";
 
 interface registrationData {
   user: {
@@ -89,9 +90,47 @@ const updateFavoriteId = async (userId: ObjectId, id: string) => {
   return user.favorites;
 };
 
+interface IUserData {
+  name: string;
+  phone: string;
+}
+
+const updateCurrentUser = async (userId: ObjectId, userData: IUserData) => {
+  const user = await User.findByIdAndUpdate(
+    userId,
+    {
+      name: userData.name,
+      phone: userData.phone,
+    },
+    { new: true }
+  );
+
+  if (!user) {
+    throw new HttpError(404, "User not found");
+  }
+
+  return user;
+};
+
+const updatePetsOfUser = async (userId: string, myPets: IMyPet) => {
+  const user = await User.findByIdAndUpdate(
+    userId,
+    { $addToSet: { myPets } },
+    { new: true }
+  );
+
+  if (!user) {
+    throw new HttpError(404, "User not found");
+  }
+
+  return user.myPets;
+};
+
 export default {
   checkUserEmailExists,
   registration,
   login,
   updateFavoriteId,
+  updateCurrentUser,
+  updatePetsOfUser,
 };
