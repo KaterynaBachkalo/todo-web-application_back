@@ -5,6 +5,7 @@ import fs from "fs";
 import { Request } from "express";
 import { Jimp } from "jimp";
 import { ObjectId } from "mongodb";
+import serverConfig from "../configs/serverConfig";
 
 interface CustomUser {
   _id: ObjectId;
@@ -68,11 +69,46 @@ const createAvatar = async (user: CustomUser, file: Express.Multer.File) => {
     .resize({ h: 150, w: 150 })
     .write(`./src/public/images/${filename}`);
 
-  // fs.renameSync(tempUpload, resultUpload);
+  fs.renameSync(tempUpload, resultUpload);
 
-  const avatar = path.join(`/images/${filename}`).replace(/\\/g, "/");
+  const avatar = path
+    .join(`${serverConfig.baseUrl}/images/${filename}`)
+    .replace(/\\/g, "/")
+    .replace("http:/", "http://");
 
   return avatar;
 };
 
-export { upload, createAvatar };
+const createPetAvatar = async (userId: string, file: Express.Multer.File) => {
+  const { path: tempUpload, originalname } = file;
+
+  const filename = `${userId}_${originalname}`;
+
+  const resultUpload = path.join(avatarDir, filename);
+
+  const newAvatar = await Jimp.read(tempUpload);
+
+  const width = newAvatar.width;
+  const height = newAvatar.height;
+
+  const minSide = Math.min(width, height);
+
+  const x = (width - minSide) / 2;
+  const y = (height - minSide) / 2;
+
+  newAvatar
+    .crop({ x, y, h: minSide, w: minSide })
+    .resize({ h: 150, w: 150 })
+    .write(`./src/public/images/${filename}`);
+
+  fs.renameSync(tempUpload, resultUpload);
+
+  const avatar = path
+    .join(`${serverConfig.baseUrl}/images/${filename}`)
+    .replace(/\\/g, "/")
+    .replace("http:/", "http://");
+
+  return avatar;
+};
+
+export { upload, createAvatar, createPetAvatar };
