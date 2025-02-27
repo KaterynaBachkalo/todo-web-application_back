@@ -23,8 +23,6 @@ router.use(authMiddlewares.protect);
 
 router.route("/current").get(getAuthControllers.getCurrentUserInfo);
 
-router.route("/current/full").get(getAuthControllers.getCurrentUserFullInfo);
-
 router
   .route("/current/edit")
   .patch(
@@ -36,7 +34,11 @@ router.patch("/avatars", upload.single("avatar"), authControllers.updateAvatar);
 
 router
   .route("/current/pets/add")
-  .post(authMiddlewares.checkPetData, updateAuthControllers.addPet);
+  .post(
+    authMiddlewares.checkPetData,
+    upload.single("imgURL"),
+    updateAuthControllers.addPet
+  );
 
 router
   .route("/current/pets/remove/:id")
