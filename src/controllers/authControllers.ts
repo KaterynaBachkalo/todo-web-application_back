@@ -3,6 +3,7 @@ import { User } from "../models";
 import { ObjectId } from "mongodb";
 import { userServices, createAvatar } from "../services";
 import { catchAsync, HttpError } from "../utils";
+import { IMyPet } from "../types";
 
 interface CustomRequest extends Request {
   user: {
@@ -12,6 +13,7 @@ interface CustomRequest extends Request {
     favorites: string[];
     avatar: string;
     phone: number;
+    myPets: IMyPet[];
   };
 }
 
@@ -33,6 +35,7 @@ const login = catchAsync(async (req: CustomRequest, res: Response) => {
       favorites: user.favorites,
       avatar: user.avatar,
       phone: user.phone,
+      myPets: user.myPets,
     },
     accessToken,
     refreshToken,
