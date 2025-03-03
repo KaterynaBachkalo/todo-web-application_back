@@ -1,9 +1,9 @@
-import { ObjectId } from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 import serverConfig from "../configs/serverConfig";
 import { User } from "../models/userModel";
 import HttpError from "../utils/HttpError";
 import jwt from "jsonwebtoken";
-import { IMyPet, IPet } from "../types";
+import { IMyPet } from "../types";
 
 interface registrationData {
   user: {
@@ -19,6 +19,7 @@ interface LoginData {
   favorites: string[];
   avatar: string;
   phone: number;
+  myPets: IMyPet[];
 }
 
 const checkUserEmailExists = async (email: string) => {
@@ -70,6 +71,7 @@ const login = async ({ email, password }: LoginData) => {
       favorites: user.favorites,
       avatar: user.avatar,
       phone: user.phone,
+      myPets: user.myPets,
     },
     accessToken,
     refreshToken,
@@ -126,6 +128,22 @@ const updatePetsOfUser = async (userId: string, myPets: IMyPet) => {
   return user.myPets;
 };
 
+const updatePets = async (userId: ObjectId, id: string) => {
+  const objectId = new mongoose.Types.ObjectId(id);
+
+  const user = await User.findByIdAndUpdate(
+    userId,
+    { $pull: { myPets: { _id: objectId } } },
+    { new: true }
+  );
+
+  if (!user) {
+    throw new HttpError(404, "User not found");
+  }
+
+  return user.myPets;
+};
+
 export default {
   checkUserEmailExists,
   registration,
@@ -133,4 +151,5 @@ export default {
   updateFavoriteId,
   updateCurrentUser,
   updatePetsOfUser,
+  updatePets,
 };
