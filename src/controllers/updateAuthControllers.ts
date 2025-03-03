@@ -4,7 +4,7 @@ import { jwtServices, petServices, userServices } from "../services";
 import { ObjectId } from "mongoose";
 import { HttpError } from "../utils";
 import { createPetAvatar } from "../services/avatarServices";
-import { AddPet, User } from "../models";
+import { AddPet } from "../models";
 
 interface CustomRequest extends Request {
   user: {
@@ -20,13 +20,14 @@ interface CustomPetRequest extends Request {
     name: string;
     phone: number;
     myPets: {
+      _id: ObjectId;
       title: string;
       name: string;
       sex: string;
       birthday: string;
       species: string;
       imgURL: string;
-    };
+    }[];
   };
 }
 
@@ -54,18 +55,16 @@ const deletePetById = catchAsync(
 
     checkAuthorization(userId);
 
-    await userServices.updateFavoriteId(userId, id);
-
-    const deletedFavorite = await AddPet.findOneAndDelete({
+    const deletedPet = await AddPet.findOneAndDelete({
       _id: id,
       owner: userId,
     });
 
-    if (!deletedFavorite) {
-      throw new HttpError(404, "Favorite not found");
+    if (!deletedPet) {
+      throw new HttpError(404, "Pet is not found");
     }
 
-    await User.findByIdAndUpdate(userId, { $pull: { myPets: id } });
+    await userServices.updatePets(userId, id);
 
     res
       .status(200)
