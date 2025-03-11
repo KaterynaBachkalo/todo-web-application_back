@@ -35,8 +35,8 @@ router.patch("/avatars", upload.single("avatar"), authControllers.updateAvatar);
 router
   .route("/current/pets/add")
   .post(
-    authMiddlewares.checkPetData,
     upload.single("imgURL"),
+    authMiddlewares.checkPetData,
     updateAuthControllers.addPet
   );
 
