@@ -69,6 +69,7 @@ const login = async ({ email, password }: LoginData) => {
       email: user.email,
       name: user.name,
       favorites: user.favorites,
+      viewed: user.viewed,
       avatar: user.avatar,
       phone: user.phone,
       myPets: user.myPets,
@@ -90,6 +91,20 @@ const updateFavoriteId = async (userId: ObjectId, id: string) => {
   }
 
   return user.favorites;
+};
+
+const updateViewedId = async (userId: ObjectId, id: string) => {
+  const user = await User.findByIdAndUpdate(
+    userId,
+    { $addToSet: { viewed: id } }, // `addToSet` не дозволяє дублювати значення
+    { new: true }
+  );
+
+  if (!user) {
+    throw new HttpError(404, "User not found");
+  }
+
+  return user.viewed;
 };
 
 interface IUserData {
@@ -152,4 +167,5 @@ export default {
   updateCurrentUser,
   updatePetsOfUser,
   updatePets,
+  updateViewedId,
 };
