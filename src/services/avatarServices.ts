@@ -79,7 +79,14 @@ const createAvatar = async (user: CustomUser, file: Express.Multer.File) => {
   return avatar;
 };
 
-const createPetAvatar = async (userId: string, file: Express.Multer.File) => {
+const createPetAvatar = async (
+  userId: string,
+  file: Express.Multer.File | null
+) => {
+  if (!file) {
+    return null;
+  }
+
   const { path: tempUpload, originalname } = file;
 
   const filename = `${userId}_${originalname}`;
