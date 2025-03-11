@@ -10,7 +10,8 @@ export interface IUser {
   ): Promise<boolean>;
   phone?: string;
   avatar?: string;
-  favorites?: string;
+  favorites?: string[];
+  viewed?: string[];
   myPets?: IPet[];
 }
 
