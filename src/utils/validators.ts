@@ -26,7 +26,7 @@ const addPetSchema = Joi.object({
   birthday: Joi.string().min(10).max(10),
   species: Joi.string(),
   sex: Joi.string(),
-  imgURL: Joi.object(),
+  imgURL: Joi.alternatives().try(Joi.object(), Joi.any().valid(null)),
 });
 
 export default {
