@@ -33,6 +33,9 @@ const userSchema = new Schema<IUser>(
     favorites: {
       type: [],
     },
+    viewed: {
+      type: [],
+    },
     myPets: {
       type: [],
     },
