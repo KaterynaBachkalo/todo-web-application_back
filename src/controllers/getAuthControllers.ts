@@ -9,6 +9,7 @@ interface CustomRequest extends Request {
     email: string;
     name: string;
     favorites: string[];
+    viewed: string[];
     avatar: string;
     phone: number;
     myPets: IMyPet[];
@@ -17,8 +18,10 @@ interface CustomRequest extends Request {
 
 const getCurrentUserInfo = catchAsync(
   async (req: CustomRequest, res: Response) => {
-    const { email, name, favorites, avatar, phone, myPets } = req.user;
-    res.status(200).json({ email, name, favorites, avatar, phone, myPets });
+    const { email, name, favorites, viewed, avatar, phone, myPets } = req.user;
+    res
+      .status(200)
+      .json({ email, name, favorites, avatar, phone, myPets, viewed });
   }
 );
 
