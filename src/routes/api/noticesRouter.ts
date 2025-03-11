@@ -19,6 +19,10 @@ router
   .route("/favorites/add/:id")
   .post(updateMiddlewares.checkFavoritesId, updateControllers.addFavorites);
 
+router
+  .route("/viewed/add/:id")
+  .post(updateMiddlewares.checkViewedId, updateControllers.addViewed);
+
 router.route("/favorites/remove/:id").delete(updateControllers.deleteFavorites);
 
 router.route("/:id").get(getControllers.getNoticesById);
