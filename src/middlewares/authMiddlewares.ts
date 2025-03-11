@@ -70,12 +70,16 @@ const checkCurrentUser = catchAsync(
 
 const checkPetData = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { value, error } = validSchemas.addPetSchema.validate(req.body);
+    const petData = {
+      ...req.body,
+      imgURL: req.file || null,
+    };
+    const { value, error } = validSchemas.addPetSchema.validate(petData);
 
     if (error) throw new HttpError(400, error.message);
 
     req.body = value;
-    console.log(req.body);
+
     next();
   }
 );
