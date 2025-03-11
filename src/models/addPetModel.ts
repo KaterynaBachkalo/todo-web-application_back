@@ -13,7 +13,6 @@ const addPetSchema = new Schema<IMyPet>(
     },
     imgURL: {
       type: String,
-      required: [true, "Set image of pet"],
     },
     species: {
       type: String,
