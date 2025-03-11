@@ -83,20 +83,26 @@ const addPet = catchAsync(async (req: CustomPetRequest, res: Response) => {
 
   const userId = accessToken && jwtServices.checkToken(accessToken);
 
+  let newPet;
+
   if (!req.file) {
-    throw new HttpError(400, "Please, upload the image");
+    // throw new HttpError(400, "Please, upload the image");
+    newPet = await petServices.addPet(userId, {
+      ...req.body,
+      imgURL: null,
+    });
+  } else {
+    const avatar = await createPetAvatar(userId, req.file);
+
+    newPet = await petServices.addPet(userId, {
+      ...req.body,
+      imgURL: avatar,
+    });
   }
 
   if (!userId) {
     throw new HttpError(401, "Unauthorized. Invalid token.");
   }
-
-  const avatar = await createPetAvatar(userId, req.file);
-
-  const newPet = await petServices.addPet(userId, {
-    ...req.body,
-    imgURL: avatar,
-  });
 
   await userServices.updatePetsOfUser(userId, newPet);
 
