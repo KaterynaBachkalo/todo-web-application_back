@@ -2,12 +2,18 @@ import { Request, Response } from "express";
 import { ObjectId } from "mongoose";
 
 import catchAsync from "../utils/catchAsync";
-import { Favorite, User } from "../models";
+import { Favorite, User, Viewed } from "../models";
 import { HttpError } from "../utils";
 import { userServices } from "../services";
 
 interface CustomRequest extends Request {
-  user: { _id: ObjectId; email: string; name: string; favorites: string };
+  user: {
+    _id: ObjectId;
+    email: string;
+    name: string;
+    favorites: string[];
+    viewed: string[];
+  };
 }
 
 const checkAuthorization = (userId: ObjectId) => {
@@ -28,6 +34,20 @@ const addFavorites = catchAsync(async (req: CustomRequest, res: Response) => {
   await Favorite.create({ _id: id, owner: userId });
 
   res.status(201).json(favorites);
+});
+
+const addViewed = catchAsync(async (req: CustomRequest, res: Response) => {
+  const { id } = req.params;
+
+  const userId = req.user._id;
+
+  checkAuthorization(userId);
+
+  const viewed = await userServices.updateViewedId(userId, id);
+
+  await Viewed.create({ _id: id, owner: userId });
+
+  res.status(201).json(viewed);
 });
 
 const deleteFavorites = catchAsync(
@@ -60,4 +80,5 @@ const deleteFavorites = catchAsync(
 export default {
   deleteFavorites,
   addFavorites,
+  addViewed,
 };
