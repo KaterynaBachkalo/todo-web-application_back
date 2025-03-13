@@ -23,7 +23,7 @@ const updateUserSchema = Joi.object({
 const addPetSchema = Joi.object({
   name: Joi.string().min(1),
   title: Joi.string().min(1),
-  birthday: Joi.string().min(10).max(10),
+  birthday: Joi.string(),
   species: Joi.string(),
   sex: Joi.string(),
   imgURL: Joi.alternatives().try(Joi.object(), Joi.any().valid(null)),
