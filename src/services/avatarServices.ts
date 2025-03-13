@@ -54,29 +54,34 @@ const createAvatar = async (user: CustomUser, file: Express.Multer.File) => {
 
   const resultUpload = path.join(avatarDir, filename);
 
-  const newAvatar = await Jimp.read(tempUpload);
+  try {
+    const newAvatar = await Jimp.read(tempUpload);
 
-  const width = newAvatar.width;
-  const height = newAvatar.height;
+    const width = newAvatar.width;
+    const height = newAvatar.height;
 
-  const minSide = Math.min(width, height);
+    const minSide = Math.min(width, height);
 
-  const x = (width - minSide) / 2;
-  const y = (height - minSide) / 2;
+    const x = (width - minSide) / 2;
+    const y = (height - minSide) / 2;
 
-  newAvatar
-    .crop({ x, y, h: minSide, w: minSide })
-    .resize({ h: 150, w: 150 })
-    .write(`./src/public/images/${filename}`);
+    newAvatar
+      .crop({ x, y, h: minSide, w: minSide })
+      .resize({ h: 150, w: 150 })
+      .write(`./src/public/images/${filename}`);
 
-  fs.renameSync(tempUpload, resultUpload);
+    fs.renameSync(tempUpload, resultUpload);
 
-  const avatar = path
-    .join(`${serverConfig.baseUrl}/images/${filename}`)
-    .replace(/\\/g, "/")
-    .replace("http:/", "http://");
+    const avatar = path
+      .join(`${serverConfig.baseUrl}/images/${filename}`)
+      .replace(/\\/g, "/")
+      .replace("http:/", "http://");
 
-  return avatar;
+    return avatar;
+  } catch (error) {
+    console.error("Error processing image:", error);
+    return null;
+  }
 };
 
 const createPetAvatar = async (
@@ -91,31 +96,38 @@ const createPetAvatar = async (
 
   const filename = `${userId}_${originalname}`;
 
-  const resultUpload = path.join(avatarDir, filename);
+  const safeDir = process.env.NODE_ENV === "production" ? "/tmp/" : avatarDir;
 
-  const newAvatar = await Jimp.read(tempUpload);
+  const resultUpload = path.join(safeDir, filename);
 
-  const width = newAvatar.width;
-  const height = newAvatar.height;
+  try {
+    const newAvatar = await Jimp.read(tempUpload);
 
-  const minSide = Math.min(width, height);
+    const width = newAvatar.width;
+    const height = newAvatar.height;
 
-  const x = (width - minSide) / 2;
-  const y = (height - minSide) / 2;
+    const minSide = Math.min(width, height);
 
-  newAvatar
-    .crop({ x, y, h: minSide, w: minSide })
-    .resize({ h: 150, w: 150 })
-    .write(`./src/public/images/${filename}`);
+    const x = (width - minSide) / 2;
+    const y = (height - minSide) / 2;
 
-  fs.renameSync(tempUpload, resultUpload);
+    newAvatar
+      .crop({ x, y, h: minSide, w: minSide })
+      .resize({ h: 150, w: 150 })
+      .write(`./src/public/images/${filename}`);
 
-  const avatar = path
-    .join(`${serverConfig.baseUrl}/images/${filename}`)
-    .replace(/\\/g, "/")
-    .replace("http:/", "http://");
+    await fs.promises.rename(tempUpload, resultUpload);
 
-  return avatar;
+    const avatar = path
+      .join(`${serverConfig.baseUrl}/images/${filename}`)
+      .replace(/\\/g, "/")
+      .replace("http:/", "http://");
+
+    return avatar;
+  } catch (error) {
+    console.error("Error processing image:", error);
+    return null;
+  }
 };
 
 export { upload, createAvatar, createPetAvatar };
