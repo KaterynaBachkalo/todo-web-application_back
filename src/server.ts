@@ -13,6 +13,6 @@ mongoose
     process.exit(1);
   });
 
-export default app.listen(serverConfig.PORT, () => {
+app.listen(serverConfig.PORT, () => {
   console.log("Server running.");
 });
