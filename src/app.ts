@@ -21,7 +21,30 @@ const app = express();
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
 app.use(logger(formatsLogger));
-app.use(cors());
+
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:4000",
+  "https://katerynabachkalo.github.io",
+  "https://my-petlove-backend.vercel.app",
+];
+
+const corsOptions = {
+  origin: function (
+    origin: string | undefined,
+    callback: (err: Error | null, allow?: boolean) => void
+  ) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 
 app.use("/images", express.static(path.join(__dirname, "public/images")));
