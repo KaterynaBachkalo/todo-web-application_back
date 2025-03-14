@@ -7,11 +7,9 @@ const router = express.Router();
 
 router.route("/").get(getControllers.getNotices);
 
-router.route("/categories").get(getControllers.getNoticeCategories);
-
-router.route("/sex").get(getControllers.getNoticeSex);
-
-router.route("/species").get(getControllers.getNoticeSpecies);
+router
+  .route("/add/:id")
+  .post(updateMiddlewares.checkNoticesId, updateControllers.addToNotices);
 
 router.use(authMiddlewares.protect);
 
@@ -24,7 +22,5 @@ router
   .post(updateMiddlewares.checkViewedId, updateControllers.addViewed);
 
 router.route("/favorites/remove/:id").delete(updateControllers.deleteFavorites);
-
-router.route("/:id").get(getControllers.getNoticesById);
 
 export default router;
