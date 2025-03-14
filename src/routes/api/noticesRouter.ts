@@ -11,6 +11,8 @@ router
   .route("/add/:id")
   .post(updateMiddlewares.checkNoticesId, updateControllers.addToNotices);
 
+router.route("/remove/:id").delete(updateControllers.deleteMyPetFromNotice);
+
 router.use(authMiddlewares.protect);
 
 router
