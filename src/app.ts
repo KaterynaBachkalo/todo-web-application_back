@@ -7,7 +7,6 @@ import path from "path";
 
 import {
   noticesRouter,
-  citiesRouter,
   friendsRouter,
   newsRouter,
   authRouter,
@@ -50,7 +49,6 @@ app.use(express.json());
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 app.use("/api/users", authRouter);
 app.use("/api/notices", noticesRouter);
-app.use("/api/cities", citiesRouter);
 app.use("/api/friends", friendsRouter);
 app.use("/api/news", newsRouter);
 
