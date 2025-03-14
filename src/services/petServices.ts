@@ -79,7 +79,7 @@ const getNotices = async (query: QueryParams) => {
 
   // INIT DB QUERY ================================
 
-  let noticeQuery = Notice.find(findOptions);
+  let noticeQuery = Notice.find(findOptions).sort({ createdAt: -1 });
 
   // Сортування
   if (query.sort === "popular" || query.sort === "unpopular") {
