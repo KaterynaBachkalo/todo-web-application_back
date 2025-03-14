@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { ObjectId } from "mongoose";
 
 import catchAsync from "../utils/catchAsync";
-import { Favorite, User, Viewed } from "../models";
+import { AddPet, Favorite, Notice, User, Viewed } from "../models";
 import { HttpError } from "../utils";
 import { userServices } from "../services";
 
@@ -77,8 +77,35 @@ const deleteFavorites = catchAsync(
   }
 );
 
+const addToNotices = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const myPet = await AddPet.findById(id);
+  console.log(myPet);
+
+  if (!myPet) {
+    return res.status(404).json({ message: "Pet not found" });
+  }
+
+  const notice = new Notice({
+    _id: myPet._id,
+    name: myPet.name,
+    title: myPet.title,
+    imgURL: myPet.imgURL,
+    species: myPet.species,
+    birthday: myPet.birthday,
+    sex: myPet.sex,
+    owner: myPet.owner,
+  });
+
+  await notice.save();
+
+  res.status(201).json(notice);
+});
+
 export default {
   deleteFavorites,
   addFavorites,
   addViewed,
+  addToNotices,
 };
