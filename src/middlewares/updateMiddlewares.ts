@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import catchAsync from "../utils/catchAsync";
-import { Favorite, Viewed } from "../models";
+import { Favorite, Notice, Viewed } from "../models";
 import { HttpError } from "../utils";
 
 const checkFavoritesId = catchAsync(
@@ -27,7 +27,20 @@ const checkViewedId = catchAsync(
   }
 );
 
+const checkNoticesId = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+
+    const idExists = await Notice.exists({ _id: id });
+
+    if (idExists) throw new HttpError(409, "Notice already exists");
+
+    next();
+  }
+);
+
 export default {
   checkFavoritesId,
   checkViewedId,
+  checkNoticesId,
 };
