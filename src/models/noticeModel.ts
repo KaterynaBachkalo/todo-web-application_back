@@ -1,8 +1,11 @@
-import { model, Schema } from "mongoose";
+import { model, Schema, Types } from "mongoose";
 import { INotice } from "../types";
 
 const noticeSchema = new Schema<INotice>(
   {
+    _id: {
+      type: Types.ObjectId,
+    },
     name: {
       type: String,
     },
@@ -33,7 +36,7 @@ const noticeSchema = new Schema<INotice>(
     locationId: {
       type: String,
     },
-    user: {
+    owner: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
