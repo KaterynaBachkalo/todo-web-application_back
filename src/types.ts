@@ -1,3 +1,5 @@
+import { ObjectId } from "mongoose";
+
 export interface IUser {
   name?: string;
   password: string;
@@ -16,6 +18,7 @@ export interface IUser {
 }
 
 export interface INotice {
+  _id?: ObjectId;
   name: string;
   title: string;
   imgURL: string;
@@ -26,7 +29,7 @@ export interface INotice {
   price: number;
   comment: string;
   locationId: string;
-  user: IUser;
+  owner: IUser;
   popularity: number;
 }
 
