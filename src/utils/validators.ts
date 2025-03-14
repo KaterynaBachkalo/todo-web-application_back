@@ -1,5 +1,4 @@
 import Joi from "joi";
-import { title } from "process";
 
 const addUserSchema = Joi.object({
   name: Joi.string().min(1).allow("").default("NONAME"),
