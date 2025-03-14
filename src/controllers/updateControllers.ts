@@ -81,7 +81,6 @@ const addToNotices = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
 
   const myPet = await AddPet.findById(id);
-  console.log(myPet);
 
   if (!myPet) {
     return res.status(404).json({ message: "Pet not found" });
@@ -103,9 +102,29 @@ const addToNotices = catchAsync(async (req: Request, res: Response) => {
   res.status(201).json(notice);
 });
 
+const deleteMyPetFromNotice = catchAsync(
+  async (req: CustomRequest, res: Response) => {
+    const { id } = req.params;
+    console.log(id);
+
+    const deletedPet = await Notice.findOneAndDelete({
+      _id: id,
+    });
+
+    if (!deletedPet) {
+      throw new HttpError(404, "Favorite not found");
+    }
+
+    res.status(200).json({
+      message: "Your pet is successfully removed from publication",
+    });
+  }
+);
+
 export default {
   deleteFavorites,
   addFavorites,
   addViewed,
   addToNotices,
+  deleteMyPetFromNotice,
 };
