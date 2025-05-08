@@ -92,7 +92,7 @@ const addPet = catchAsync(async (req: CustomPetRequest, res: Response) => {
       imgURL: null,
     });
   } else {
-    const avatar = await createPetAvatar(userId, req.file);
+    const avatar = await createPetAvatar(req.file);
 
     newPet = await petServices.addPet(userId, {
       ...req.body,
