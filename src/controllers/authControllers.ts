@@ -61,7 +61,7 @@ const updateAvatar = catchAsync(async (req: CustomRequest, res: Response) => {
     throw new HttpError(400, "Please, upload the image");
   }
 
-  const avatar = await createAvatar(req.user, req.file);
+  const avatar = await createAvatar(req.file);
 
   await User.findByIdAndUpdate(_id, { avatar });
 
