@@ -105,7 +105,6 @@ const addToNotices = catchAsync(async (req: Request, res: Response) => {
 const deleteMyPetFromNotice = catchAsync(
   async (req: CustomRequest, res: Response) => {
     const { id } = req.params;
-    console.log(id);
 
     const deletedPet = await Notice.findOneAndDelete({
       _id: id,
