@@ -54,6 +54,10 @@ app.use("/api/news", newsRouter);
 
 app.get("/api/proxy", proxyController);
 
+app.get("/", (req: Request, res: Response) => {
+  res.send("✅ API is working! Use /api/... routes.");
+});
+
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   const { status = 500, message = "Server error" } = err;
   res.status(status).json({ message });
