@@ -45,11 +45,11 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage });
 
 const createAvatar = async (file: Express.Multer.File) => {
-  return file.path;
+ return (file as any).path;
 };
 
 const createPetAvatar = async (file: Express.Multer.File) => {
-  return file.path;
+  return (file as any).path;
 };
 
 export { upload, createAvatar, createPetAvatar };
