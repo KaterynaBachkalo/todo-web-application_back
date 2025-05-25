@@ -9,7 +9,14 @@ const userSchema = new Schema<IUser>(
     },
     password: {
       type: String,
-      required: [true, "Set password for user"],
+      required: function () {
+        // пароль обов’язковий тільки якщо це не Google користувач
+        return !this.googleId;
+      },
+    },
+    googleId: {
+      type: String,
+      default: null,
     },
     email: {
       type: String,
