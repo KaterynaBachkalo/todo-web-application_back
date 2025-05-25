@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { User } from "../models";
 import { ObjectId } from "mongodb";
-import { userServices, createAvatar } from "../services";
+import { userServices, createAvatar, jwtServices } from "../services";
 import { catchAsync, HttpError } from "../utils";
 import { IMyPet } from "../types";
 
@@ -44,7 +44,16 @@ const login = catchAsync(async (req: CustomRequest, res: Response) => {
   });
 });
 
-const refreshToken = catchAsync(async (req: Request, res: Response) => {});
+const refreshToken = catchAsync(async (req: Request, res: Response) => {
+  try {
+    const { token } = req.body;
+    const result = await jwtServices.refreshToken(token);
+    res.json(result);
+  } catch (error: any) {
+    console.log(error);
+    res.status(error.status || 500).json({ message: error.message });
+  }
+});
 
 const logout = catchAsync(async (req: CustomRequest, res: Response) => {
   const { _id } = req.user;
