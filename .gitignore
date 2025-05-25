@@ -4,3 +4,4 @@ node_modules
 tmp
 public
 .vercel
+client_secret.json
