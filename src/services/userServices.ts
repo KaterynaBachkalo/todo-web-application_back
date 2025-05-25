@@ -170,7 +170,6 @@ interface GoogleData {
 }
 
 const authGoogle = async (userData: GoogleData) => {
-  console.log(userData);
   const { email } = userData;
 
   let user = await User.findOne({ email }).select("+password");
