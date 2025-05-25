@@ -3,11 +3,16 @@ import { authMiddlewares } from "../../middlewares";
 import {
   authControllers,
   getAuthControllers,
+  google,
   updateAuthControllers,
 } from "../../controllers";
 import { upload } from "../../services/avatarServices";
 
 const router = express.Router();
+
+router.get("/google", google.googleAuth);
+
+router.get("/google-redirect", google.googleRedirect);
 
 router
   .route("/register")
