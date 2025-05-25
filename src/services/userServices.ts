@@ -159,6 +159,49 @@ const updatePets = async (userId: ObjectId, id: string) => {
   return user.myPets;
 };
 
+interface GoogleData {
+  id: string;
+  email: string;
+  verified_email: boolean;
+  name: string;
+  given_name: string;
+  family_name: string;
+  picture: string;
+}
+
+const authGoogle = async (userData: GoogleData) => {
+  console.log(userData);
+  const { email } = userData;
+
+  let user = await User.findOne({ email }).select("+password");
+
+  if (!user) {
+    user = await User.create({
+      name: userData.name,
+      email: userData.email,
+      // verify: userData.verified_email,
+      googleId: userData.id,
+      avatar: userData.picture,
+    });
+  }
+
+  const accessToken = jwt.sign({ id: user.id }, serverConfig.jwtSecret, {
+    expiresIn:
+      process.env.NODE_ENV === "production" ? "120m" : serverConfig.jwtExpires,
+  });
+
+  const refreshToken = jwt.sign({ id: user.id }, serverConfig.jwtSecret, {
+    expiresIn: process.env.NODE_ENV === "production" ? "7d" : "1d",
+  });
+
+  user.accessToken = accessToken;
+  user.refreshToken = refreshToken;
+
+  await user.save();
+
+  return { accessToken, refreshToken };
+};
+
 export default {
   checkUserEmailExists,
   registration,
@@ -168,4 +211,5 @@ export default {
   updatePetsOfUser,
   updatePets,
   updateViewedId,
+  authGoogle,
 };
