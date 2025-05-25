@@ -15,6 +15,7 @@ export interface IUser {
   favorites?: string[];
   viewed?: string[];
   myPets?: IPet[];
+  googleId?: string;
 }
 
 export interface INotice {
