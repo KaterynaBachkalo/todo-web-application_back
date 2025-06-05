@@ -7,7 +7,7 @@ import { userServices } from "../services";
 const googleAuth = catchAsync(async (req: Request, res: Response) => {
   const stringifiedParams = qs.stringify({
     client_id: process.env.GOOGLE_CLIENT_ID,
-    redirect_uri: `${process.env.BASE_URL}/api/users/google-redirect`,
+    redirect_uri: `${process.env.FRONTEND_URL}/api/users/google-redirect`,
     scope: [
       "https://www.googleapis.com/auth/userinfo.email",
       "https://www.googleapis.com/auth/userinfo.profile",
@@ -34,7 +34,7 @@ const googleRedirect = catchAsync(async (req: Request, res: Response) => {
     data: {
       client_id: process.env.GOOGLE_CLIENT_ID,
       client_secret: process.env.GOOGLE_CLIENT_SECRET,
-      redirect_uri: `${process.env.BASE_URL}/api/users/google-redirect`,
+      redirect_uri: `${process.env.FRONTEND_URL}/api/users/google-redirect`,
       grant_type: "authorization_code",
       code,
     },
