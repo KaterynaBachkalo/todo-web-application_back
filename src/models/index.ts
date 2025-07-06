@@ -1,10 +1,4 @@
-import { AddPet } from "./addPetModel";
-import { City } from "./cityModel";
-import { Friend } from "./friendModel";
-import { News } from "./newsModel";
-import { Notice } from "./noticeModel";
-import { User } from "./userModel";
-import { Favorite } from "./favoriteModel";
-import { Viewed } from "./viewedModel";
+import Contact from "./contactModel";
+import User from "./userModel";
 
-export { AddPet, User, City, Friend, News, Notice, Favorite, Viewed };
+export { Contact, User };
