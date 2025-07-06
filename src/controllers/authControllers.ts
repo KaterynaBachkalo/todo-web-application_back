@@ -1,20 +1,14 @@
 import { Request, Response } from "express";
 import { User } from "../models";
-import { ObjectId } from "mongodb";
-import { userServices, createAvatar, jwtServices } from "../services";
+import { jwtServices, userServices } from "../services";
 import { catchAsync, HttpError } from "../utils";
-import { IMyPet } from "../types";
+import { CreationOptional } from "sequelize";
 
 interface CustomRequest extends Request {
   user: {
-    _id: ObjectId;
+    id: CreationOptional<number>;
     email: string;
     name: string;
-    favorites: string[];
-    viewed: string[];
-    avatar: string;
-    phone: number;
-    myPets: IMyPet[];
   };
 }
 
@@ -33,17 +27,11 @@ const login = catchAsync(async (req: CustomRequest, res: Response) => {
     user: {
       email: user.email,
       name: user.name,
-      favorites: user.favorites,
-      viewed: user.viewed,
-      avatar: user.avatar,
-      phone: user.phone,
-      myPets: user.myPets,
     },
     accessToken,
     refreshToken,
   });
 });
-
 const refreshToken = catchAsync(async (req: Request, res: Response) => {
   try {
     const { token } = req.body;
@@ -56,27 +44,17 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
 });
 
 const logout = catchAsync(async (req: CustomRequest, res: Response) => {
-  const { _id } = req.user;
+  const { id } = req.user;
 
-  await User.findByIdAndUpdate(_id, { accessToken: "", refreshToken: "" });
+  const user = await User.findByPk(id);
 
-  res.status(204).json();
-});
-
-const updateAvatar = catchAsync(async (req: CustomRequest, res: Response) => {
-  const { _id } = req.user;
-
-  if (!req.file) {
-    throw new HttpError(400, "Please, upload the image");
+  if (!user) {
+    throw new HttpError(404, "User not found");
   }
 
-  const avatar = await createAvatar(req.file);
+  await user.update({ accessToken: "", refreshToken: "" });
 
-  await User.findByIdAndUpdate(_id, { avatar });
-
-  res.status(200).json({
-    avatar,
-  });
+  res.status(204).json();
 });
 
 export default {
@@ -84,5 +62,4 @@ export default {
   login,
   refreshToken,
   logout,
-  updateAvatar,
 };
