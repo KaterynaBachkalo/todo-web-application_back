@@ -45,7 +45,7 @@ const protect = catchAsync(
 
     if (!userId) throw new HttpError(401, "Not authorized");
 
-    const currentUser = await User.findById(userId);
+    const currentUser = await User.findByPk(userId);
 
     if (!currentUser || !currentUser.accessToken)
       throw new HttpError(401, "Not authorized");
@@ -68,26 +68,9 @@ const checkCurrentUser = catchAsync(
   }
 );
 
-const checkPetData = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const petData = {
-      ...req.body,
-      imgURL: req.file || null,
-    };
-    const { value, error } = validSchemas.addPetSchema.validate(petData);
-
-    if (error) throw new HttpError(400, error.message);
-
-    req.body = value;
-
-    next();
-  }
-);
-
 export default {
   checkRegistrationData,
   checkLoginData,
   protect,
   checkCurrentUser,
-  checkPetData,
 };
