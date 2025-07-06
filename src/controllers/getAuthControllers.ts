@@ -1,27 +1,19 @@
 import { Request, Response } from "express";
 import catchAsync from "../utils/catchAsync";
-import { ObjectId } from "mongoose";
-import { IMyPet } from "../types";
+import { CreationOptional } from "sequelize";
 
 interface CustomRequest extends Request {
   user: {
-    _id: ObjectId;
+    id: CreationOptional<number>;
     email: string;
     name: string;
-    favorites: string[];
-    viewed: string[];
-    avatar: string;
-    phone: number;
-    myPets: IMyPet[];
   };
 }
 
 const getCurrentUserInfo = catchAsync(
   async (req: CustomRequest, res: Response) => {
-    const { email, name, favorites, viewed, avatar, phone, myPets } = req.user;
-    res
-      .status(200)
-      .json({ email, name, favorites, avatar, phone, myPets, viewed });
+    const { email, name } = req.user;
+    res.status(200).json({ email, name });
   }
 );
 
