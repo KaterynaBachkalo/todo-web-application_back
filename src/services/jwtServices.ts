@@ -21,7 +21,7 @@ const refreshToken = async (token: string) => {
       id: string;
     };
 
-    const user = await User.findById(id);
+    const user = await User.findByPk(id);
 
     if (!user || user.refreshToken !== token) {
       throw new HttpError(401, "Invalid refresh token");
@@ -47,4 +47,7 @@ const refreshToken = async (token: string) => {
   }
 };
 
-export default { checkToken, refreshToken };
+export default {
+  checkToken,
+  refreshToken,
+};
