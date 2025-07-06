@@ -1,68 +1,100 @@
-import { model, Schema } from "mongoose";
 import { genSalt, hash, compare } from "bcrypt";
-import { IUser } from "../types";
+import sequelize from "../configs/config";
+import {
+  CreationOptional,
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+} from "sequelize";
+import Contact from "./contactModel";
 
-const userSchema = new Schema<IUser>(
+interface UserModel
+  extends Model<
+    InferAttributes<UserModel>,
+    InferCreationAttributes<UserModel>
+  > {
+  id: CreationOptional<number>;
+  name: string;
+  email: string;
+  password: string;
+  googleId: string | null;
+  checkPassword: (candidate: string, passwdHash: string) => Promise<boolean>;
+  accessToken: string | null;
+  refreshToken: string | null;
+}
+
+declare module "sequelize" {
+  interface Model {
+    checkPassword?: (candidate: string, passwdHash: string) => Promise<boolean>;
+  }
+}
+
+const User = sequelize.define<UserModel>(
+  "User",
   {
+    id: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     name: {
-      type: String,
-    },
-    password: {
-      type: String,
-      required: function () {
-        // пароль обов’язковий тільки якщо це не Google користувач
-        return !this.googleId;
-      },
-    },
-    googleId: {
-      type: String,
-      default: null,
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     email: {
-      type: String,
-      required: [true, "Email is required"],
-      unique: true,
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    googleId: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     accessToken: {
-      type: String,
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     refreshToken: {
-      type: String,
-    },
-    phone: {
-      type: Number,
-      default: null,
-    },
-    avatar: {
-      type: String,
-      default: "",
-    },
-    favorites: {
-      type: [],
-    },
-    viewed: {
-      type: [],
-    },
-    myPets: {
-      type: [],
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   },
   {
-    versionKey: false,
     timestamps: true,
+
+    hooks: {
+      beforeCreate: async (user) => {
+        if (user.password) {
+          const salt = await genSalt(10);
+          user.password = await hash(user.password, salt);
+        }
+      },
+      beforeUpdate: async (user) => {
+        if (user.changed("password")) {
+          const salt = await genSalt(10);
+          user.password = await hash(user.password, salt);
+        }
+      },
+    },
+    defaultScope: {},
   }
 );
 
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
-
-  const salt = await genSalt(10);
-  this.password = await hash(this.password, salt);
-
-  next();
+User.hasMany(Contact, { foreignKey: "user_id" });
+Contact.belongsTo(User, {
+  foreignKey: "user_id",
+  targetKey: "id",
 });
 
-userSchema.methods.checkPassword = (candidate: string, passwdHash: string) =>
-  compare(candidate, passwdHash);
+User.prototype.checkPassword = async function (
+  candidate: string,
+  passwdHash: string
+): Promise<boolean> {
+  return compare(candidate, passwdHash);
+};
 
-export const User = model<IUser>("User", userSchema);
+export default User;
