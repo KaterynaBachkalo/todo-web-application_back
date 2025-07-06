@@ -1,29 +1,23 @@
-import mongoose, { ObjectId } from "mongoose";
+import { CreationOptional } from "sequelize";
 import serverConfig from "../configs/serverConfig";
-import { User } from "../models/userModel";
+import User from "../models/userModel";
 import HttpError from "../utils/HttpError";
 import jwt from "jsonwebtoken";
-import { IMyPet } from "../types";
+import { v4 as uuidv4 } from "uuid";
 
 interface registrationData {
-  user: {
-    name: string;
-    email: string;
-    password: string;
-  };
+  name: string;
+  email: string;
+  password: string;
 }
 
 interface LoginData {
   email: string;
   password: string;
-  favorites: string[];
-  avatar: string;
-  phone: number;
-  myPets: IMyPet[];
 }
 
 const checkUserEmailExists = async (email: string) => {
-  const emailExists = await User.exists({ email });
+  const emailExists = await User.findOne({ where: { email } });
 
   if (emailExists) throw new HttpError(409, "Email in use");
 };
@@ -43,7 +37,7 @@ const registration = async (data: registrationData) => {
 };
 
 const login = async ({ email, password }: LoginData) => {
-  const user = await User.findOne({ email }).select("+password");
+  const user = await User.findOne({ where: { email } });
 
   if (!user) throw new HttpError(401, "Email or password is wrong");
 
@@ -62,101 +56,33 @@ const login = async ({ email, password }: LoginData) => {
     expiresIn: process.env.NODE_ENV === "production" ? "7d" : "1d",
   });
 
-  await User.findByIdAndUpdate(user.id, { accessToken, refreshToken });
-
   return {
     user: {
       email: user.email,
       name: user.name,
-      favorites: user.favorites,
-      viewed: user.viewed,
-      avatar: user.avatar,
-      phone: user.phone,
-      myPets: user.myPets,
     },
     accessToken,
     refreshToken,
   };
 };
 
-const updateFavoriteId = async (userId: ObjectId, id: string) => {
-  const user = await User.findByIdAndUpdate(
-    userId,
-    { $addToSet: { favorites: id } }, // `addToSet` не дозволяє дублювати значення
-    { new: true }
-  );
-
-  if (!user) {
-    throw new HttpError(404, "User not found");
-  }
-
-  return user.favorites;
-};
-
-const updateViewedId = async (userId: ObjectId, id: string) => {
-  const user = await User.findByIdAndUpdate(
-    userId,
-    { $addToSet: { viewed: id } }, // `addToSet` не дозволяє дублювати значення
-    { new: true }
-  );
-
-  if (!user) {
-    throw new HttpError(404, "User not found");
-  }
-
-  return user.viewed;
-};
-
 interface IUserData {
   name: string;
-  phone: string;
 }
 
-const updateCurrentUser = async (userId: ObjectId, userData: IUserData) => {
-  const user = await User.findByIdAndUpdate(
-    userId,
-    {
-      name: userData.name,
-      phone: userData.phone,
-    },
-    { new: true }
-  );
+const updateCurrentUser = async (
+  userId: CreationOptional<number>,
+  userData: IUserData
+) => {
+  const user = await User.findByPk(userId);
 
   if (!user) {
     throw new HttpError(404, "User not found");
   }
 
-  return user;
-};
-
-const updatePetsOfUser = async (userId: string, myPets: IMyPet) => {
-  const user = await User.findByIdAndUpdate(
-    userId,
-    { $addToSet: { myPets } },
-    { new: true }
-  );
-
-  if (!user) {
-    throw new HttpError(404, "User not found");
-  }
-
-  return user.myPets;
-};
-
-const updatePets = async (userId: ObjectId, id: string) => {
-  const objectId = new mongoose.Types.ObjectId(id);
-
-  const user = await User.findByIdAndUpdate(
-    userId,
-    { $pull: { myPets: { _id: objectId } } },
-    { new: true }
-  );
-
-  if (!user) {
-    throw new HttpError(404, "User not found");
-  }
-
-  return user.myPets;
+  return user.update({
+    name: userData.name,
+  });
 };
 
 interface GoogleData {
@@ -166,13 +92,12 @@ interface GoogleData {
   name: string;
   given_name: string;
   family_name: string;
-  picture: string;
 }
 
 const authGoogle = async (userData: GoogleData) => {
   const { email } = userData;
 
-  let user = await User.findOne({ email }).select("+password");
+  let user = await User.findOne({ where: { email } });
 
   if (!user) {
     user = await User.create({
@@ -180,7 +105,7 @@ const authGoogle = async (userData: GoogleData) => {
       email: userData.email,
       // verify: userData.verified_email,
       googleId: userData.id,
-      avatar: userData.picture,
+      password: uuidv4(),
     });
   }
 
@@ -205,10 +130,6 @@ export default {
   checkUserEmailExists,
   registration,
   login,
-  updateFavoriteId,
   updateCurrentUser,
-  updatePetsOfUser,
-  updatePets,
-  updateViewedId,
   authGoogle,
 };
