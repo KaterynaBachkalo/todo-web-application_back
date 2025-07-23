@@ -56,6 +56,11 @@ const login = async ({ email, password }: LoginData) => {
     expiresIn: process.env.NODE_ENV === "production" ? "7d" : "1d",
   });
 
+  user.accessToken = accessToken;
+  user.refreshToken = refreshToken;
+
+  await user.save();
+
   return {
     user: {
       email: user.email,
