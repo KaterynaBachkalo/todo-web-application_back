@@ -52,7 +52,7 @@ const logout = catchAsync(async (req: CustomRequest, res: Response) => {
     throw new HttpError(404, "User not found");
   }
 
-  await user.update({ accessToken: "", refreshToken: "" });
+  await user.update({ accessToken: null, refreshToken: null });
 
   res.status(204).json();
 });
