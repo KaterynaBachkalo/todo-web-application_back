@@ -1,17 +1,16 @@
+import { DataTypes, Op } from "sequelize";
 import { Contact } from "../models";
-import { QueryParams } from "../types";
+import { IContact, QueryParams } from "../types";
 
 // PAGINATION FEATURE =============================
-const pagination = (dbQuery: any, query: QueryParams) => {
-  const limit = 6;
+const pagination = (query: QueryParams) => {
+  const limit = 10;
 
-  const paginationPage = query.page ? +query.page : 1;
-  const paginationLimit = query.limit ? +query.limit : limit;
-  const docsToSkip = (paginationPage - 1) * paginationLimit;
+  const page = query.page ? +query.page : 1;
+  const limmit = query.limit ? +query.limit : limit;
+  const offset = (page - 1) * limmit;
 
-  dbQuery.skip(docsToSkip).limit(paginationLimit);
-
-  return { page: paginationPage, limit: paginationLimit };
+  return { limit, offset, page };
 };
 
 const getContacts = async (query: QueryParams) => {
@@ -26,29 +25,35 @@ const getContacts = async (query: QueryParams) => {
 
   // INIT DB QUERY ================================
 
-  let contactQuery = await Contact.findAll(findOptions);
+  const { limit, offset, page } = pagination(query);
 
-  const { page, limit } = pagination(contactQuery, query);
+  const { count, rows } = await Contact.findAndCountAll({
+    where: {
+      name: {
+        [Op.like]: `%${query.name || ""}%`,
+      },
+    },
+    offset,
+    limit,
+  });
 
-  const contacts = await contactQuery;
-
-  const totalContacts = await Contact.count(findOptions);
+  const contacts = rows;
 
   return {
     contacts,
-    totalContacts,
+    totalContacts: count,
     page,
     limit,
   };
 };
 
-// const addContact = async (userId: string, contactData: IPet) => {
-//   const newContact = await addContact.create({ owner: userId, ...contactData });
+const addContact = async (userId: string, contactData: IContact) => {
+  const newContact = await Contact.create({ user_id: userId, ...contactData });
 
-//   return newContact;
-// };
+  return newContact;
+};
 
 export default {
   getContacts,
-  //   addContact,
+  addContact,
 };
