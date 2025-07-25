@@ -10,9 +10,9 @@ router.use(authMiddlewares.protect);
 router.route("/").get(getControllers.getContacts);
 
 router
-  .route("/add/:id")
-  .post(updateMiddlewares.checkContactId, updateControllers.addToContacts);
+  .route("/add")
+  .post(updateMiddlewares.checkNumber, updateControllers.addContacts);
 
-router.route("/remove/:id").delete(updateControllers.deleteFromContacts);
+router.route("/remove/:id").delete(updateControllers.deleteContacts);
 
 export default router;
