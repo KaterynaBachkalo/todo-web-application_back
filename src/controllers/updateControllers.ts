@@ -4,6 +4,7 @@ import catchAsync from "../utils/catchAsync";
 import { Contact } from "../models";
 import { HttpError } from "../utils";
 import { CreationOptional } from "sequelize";
+import { contactServices, jwtServices } from "../services";
 
 interface CustomRequest extends Request {
   user: {
@@ -13,40 +14,37 @@ interface CustomRequest extends Request {
   };
 }
 
-const addToContacts = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
+const addContacts = catchAsync(async (req: CustomRequest, res: Response) => {
+  const accessToken =
+    req.headers.authorization?.startsWith("Bearer ") &&
+    req.headers.authorization.split(" ")[1];
 
-  const myContact = await Contact.findByPk(id);
+  const userId = accessToken && jwtServices.checkToken(accessToken);
 
-  if (!myContact) {
-    return res.status(404).json({ message: "Contact not found" });
+  if (!userId) {
+    throw new HttpError(401, "Not authorized");
   }
 
-  const contact = await Contact.create({
-    name: myContact.name,
-    phone: myContact.phone,
-  });
+  const newContact = await contactServices.addContact(userId, req.body);
 
-  res.status(201).json(contact);
+  res.status(201).json(newContact);
 });
 
-const deleteFromContacts = catchAsync(
-  async (req: CustomRequest, res: Response) => {
-    const { id } = req.params;
+const deleteContacts = catchAsync(async (req: CustomRequest, res: Response) => {
+  const { id } = req.params;
 
-    const deletedContact = await Contact.destroy({ where: { id: id } });
+  const deletedContact = await Contact.destroy({ where: { id: id } });
 
-    if (!deletedContact) {
-      throw new HttpError(404, "Contact not found");
-    }
-
-    res.status(200).json({
-      message: "Your contact is successfully removed",
-    });
+  if (!deletedContact) {
+    throw new HttpError(404, "Contact not found");
   }
-);
+
+  res.status(200).json({
+    message: "Your contact is successfully removed",
+  });
+});
 
 export default {
-  addToContacts,
-  deleteFromContacts,
+  addContacts,
+  deleteContacts,
 };
