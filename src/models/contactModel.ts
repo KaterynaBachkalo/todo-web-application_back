@@ -13,7 +13,7 @@ interface ContactModel
     InferCreationAttributes<ContactModel>
   > {
   id: CreationOptional<number>;
-  user_id?: number;
+  user_id?: string;
   name?: string;
   phone: string;
 }
@@ -28,10 +28,11 @@ const Contact = sequelize.define<ContactModel>(
     },
     user_id: {
       type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     phone: {
       type: DataTypes.STRING,
