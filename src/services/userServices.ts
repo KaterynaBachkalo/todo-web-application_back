@@ -39,13 +39,11 @@ const registration = async (data: registrationData) => {
 const login = async ({ email, password }: LoginData) => {
   const user = await User.findOne({ where: { email } });
 
-  if (!user) throw new HttpError(401, "Email or password is wrong");
+  if (!user) throw new HttpError(401, "User with this email not found");
 
   const passwdIsValid = await user.checkPassword(password, user.password);
 
-  if (!passwdIsValid) throw new HttpError(401, "Email or password is wrong");
-
-  user.password = "";
+  if (!passwdIsValid) throw new HttpError(401, "Your password is wrong");
 
   const accessToken = jwt.sign({ id: user.id }, serverConfig.jwtSecret, {
     expiresIn:
