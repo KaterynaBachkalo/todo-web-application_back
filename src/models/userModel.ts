@@ -45,6 +45,7 @@ const User = sequelize.define<UserModel>(
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     password: {
       type: DataTypes.STRING,
@@ -94,7 +95,7 @@ User.prototype.checkPassword = async function (
   candidate: string,
   passwdHash: string
 ): Promise<boolean> {
-  return compare(candidate, passwdHash);
+  return await compare(candidate, passwdHash);
 };
 
 export default User;
