@@ -3,9 +3,8 @@ import dotenv from "dotenv";
 import logger from "morgan";
 import cors from "cors";
 import { NextFunction, Request, Response } from "express";
-import path from "path";
 
-import { contactsRouter, authRouter } from "./routes/api";
+import { tasksRouter } from "./routes/api";
 import { proxyController } from "./controllers";
 
 dotenv.config();
@@ -16,12 +15,7 @@ const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
 app.use(logger(formatsLogger));
 
-const allowedOrigins = [
-  "http://localhost:3000",
-  "http://localhost:4000",
-  "https://katerynabachkalo.github.io/phonebook/",
-  // "https://phonebook-backend.vercel.app",
-];
+const allowedOrigins = ["http://localhost:3000", "http://localhost:4000"];
 
 const corsOptions = {
   origin: function (
@@ -41,9 +35,7 @@ app.use(cors(corsOptions));
 
 app.use(express.json());
 
-app.use("/images", express.static(path.join(__dirname, "public/images")));
-app.use("/api/users", authRouter);
-app.use("/api/contacts", contactsRouter);
+app.use("/api/tasks", tasksRouter);
 
 app.get("/api/proxy", proxyController);
 
