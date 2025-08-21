@@ -1,4 +1,3 @@
-import contactsRouter from "./contactsRouter";
-import authRouter from "./authRouter";
+import tasksRouter from "./tasksRouter";
 
-export { contactsRouter, authRouter };
+export { tasksRouter };

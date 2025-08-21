@@ -1,4 +1,3 @@
-import Contact from "./contactModel";
-import User from "./userModel";
+import Task from "./taskModel";
 
-export { Contact, User };
+export { Task };
