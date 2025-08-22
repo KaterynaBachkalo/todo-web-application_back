@@ -3,30 +3,31 @@ import { Task } from "../models";
 import { ITask, QueryParams } from "../types";
 
 const getTasks = async (query: QueryParams) => {
-  // SEARCH FEATURE =====================================
-
-  const findOptions: Record<string, unknown> = {};
-
-  // Пошук по name
-  if (typeof query.text === "string" && query.text.trim() !== "") {
-    findOptions.text = new RegExp(query.text, "i");
-  }
-
-  // Фільтрація по status
-  if (query.status && ["all", "done", "undone"].includes(query.status)) {
-    findOptions.status = query.status;
-  }
+  console.log("query", query);
 
   // INIT DB QUERY ================================
 
+  const where: any = {
+    text: {
+      [Op.like]: `%${query.text || ""}%`,
+    },
+  };
+
+  if (query.status && query.status !== "all") {
+    where.status = query.status;
+  }
+
   const tasks = await Task.findAll({
-    where: findOptions,
-    order: [["priority", "DESC"]],
+    where,
+    order: [
+      [
+        "priority",
+        query.sort && query.sort.toUpperCase() === "ASC" ? "ASC" : "DESC",
+      ],
+    ],
   });
 
-  return {
-    tasks,
-  };
+  return tasks;
 };
 
 const addTask = async (taskData: ITask) => {
