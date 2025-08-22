@@ -8,6 +8,8 @@ router.route("/").get(getControllers.getTasks);
 
 router.route("/add").post(updateControllers.addTasks);
 
+router.route("/:id").patch(updateControllers.changeStatus);
+
 router.route("/remove/:id").delete(updateControllers.deleteTasks);
 
 export default router;
