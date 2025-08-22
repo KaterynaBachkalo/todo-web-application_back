@@ -9,6 +9,6 @@ export interface ITask {
 
 export interface QueryParams {
   text?: string | null;
-  status?: "done" | "undone";
-  priority?: number;
+  status?: "all" | "done" | "undone";
+  sort?: "asc" | "desc";
 }
