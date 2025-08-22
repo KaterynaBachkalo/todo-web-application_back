@@ -8,7 +8,7 @@ export interface ITask {
 }
 
 export interface QueryParams {
-  text?: string | null;
+  search?: string | null;
   status?: "all" | "done" | "undone";
   sort?: "asc" | "desc";
 }
