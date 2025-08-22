@@ -25,7 +25,23 @@ const deleteTasks = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const changeStatus = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { status, text } = req.body;
+
+  const updatedCount = await Task.update({ status }, { where: { id } });
+
+  if (!updatedCount) {
+    throw new HttpError(404, "Task not found");
+  }
+
+  const updatedTask = await Task.findByPk(id);
+
+  res.status(200).json(updatedTask);
+});
+
 export default {
   addTasks,
   deleteTasks,
+  changeStatus,
 };
