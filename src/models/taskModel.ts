@@ -14,7 +14,7 @@ interface TaskModel
   > {
   id: CreationOptional<number>;
   text: string;
-  status: "all" | "done" | "undone";
+  status: "done" | "undone";
   priority: number;
 }
 
