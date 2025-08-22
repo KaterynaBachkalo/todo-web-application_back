@@ -9,7 +9,7 @@ const getTasks = async (query: QueryParams) => {
 
   const where: any = {
     text: {
-      [Op.like]: `%${query.text || ""}%`,
+      [Op.like]: `%${query.search || ""}%`,
     },
   };
 
@@ -17,15 +17,15 @@ const getTasks = async (query: QueryParams) => {
     where.status = query.status;
   }
 
-  const tasks = await Task.findAll({
-    where,
-    order: [
-      [
-        "priority",
-        query.sort && query.sort.toUpperCase() === "ASC" ? "ASC" : "DESC",
-      ],
-    ],
-  });
+  const findOptions: any = { where };
+
+  if (query.sort) {
+    findOptions.order = [
+      ["priority", query.sort.toUpperCase() === "ASC" ? "ASC" : "DESC"],
+    ];
+  }
+
+  const tasks = await Task.findAll(findOptions);
 
   return tasks;
 };
