@@ -21,11 +21,8 @@ const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:3001",
   "http://localhost:4000",
-  "https://katerynabachkalo.github.io/todo-web-application",
+  "https://katerynabachkalo.github.io",
   "https://todo-web-application-back-ooje.vercel.app",
-  // Add common Vercel domains
-  /^https:\/\/.*\.vercel\.app$/,
-  /^https:\/\/.*\.vercel\.app$/,
 ];
 
 const corsOptions = {
@@ -33,29 +30,7 @@ const corsOptions = {
     origin: string | undefined,
     callback: (err: Error | null, allow?: boolean) => void
   ) {
-    // Allow all origins in development
-    if (isDevelopment) {
-      callback(null, true);
-      return;
-    }
-
-    // In production, check against allowed origins
-    if (!origin) {
-      callback(null, true);
-      return;
-    }
-
-    const isAllowed = allowedOrigins.some((allowed) => {
-      if (typeof allowed === "string") {
-        return allowed === origin;
-      }
-      if (allowed instanceof RegExp) {
-        return allowed.test(origin);
-      }
-      return false;
-    });
-
-    if (isAllowed) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
