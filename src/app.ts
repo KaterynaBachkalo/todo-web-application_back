@@ -18,7 +18,7 @@ app.use(logger(formatsLogger));
 const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:4000",
-  "https://github.com/KaterynaBachkalo/todo-web-application",
+  "https://katerynabachkalo.github.io/todo-web-application/",
 ];
 
 const corsOptions = {
