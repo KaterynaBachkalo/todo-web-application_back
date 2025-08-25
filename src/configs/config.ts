@@ -14,6 +14,7 @@ const sequelize = new Sequelize({
   dialect: "mariadb",
   dialectOptions: {
     charset: "utf8mb4",
+    ssl: { rejectUnauthorized: true },
   },
 });
 
