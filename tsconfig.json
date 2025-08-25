@@ -11,6 +11,6 @@
     "outDir": "./dist",
     "experimentalDecorators": true
   },
-  "include": ["src/**/*.ts", "src/app.ts", "src/server.ts"],
+  "include": ["src/**/*.ts", "src/app.ts", "src/index.ts.ts", "src/server.ts"],
   "exclude": ["node_modules"]
 }

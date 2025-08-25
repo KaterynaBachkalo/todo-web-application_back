@@ -3,8 +3,6 @@ import { Task } from "../models";
 import { ITask, QueryParams } from "../types";
 
 const getTasks = async (query: QueryParams) => {
-  console.log("query", query);
-
   // INIT DB QUERY ================================
 
   const where: any = {

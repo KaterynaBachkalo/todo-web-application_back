@@ -15,7 +15,7 @@ const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
 app.use(logger(formatsLogger));
 
-const allowedOrigins = ["http://localhost:3000", "http://localhost:4000"];
+const allowedOrigins = ["http://localhost:3001", "http://localhost:4000"];
 
 const corsOptions = {
   origin: function (
