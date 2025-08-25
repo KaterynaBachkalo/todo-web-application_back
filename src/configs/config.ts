@@ -10,7 +10,7 @@ const sequelize = new Sequelize({
   password: serverConfig.password,
   host: serverConfig.host,
   port: serverConfig.port ? Number(serverConfig.port) : undefined,
-  dialect: "mariadb",
+  dialect: "mysql",
   dialectOptions: {
     charset: "utf8mb4",
   },
