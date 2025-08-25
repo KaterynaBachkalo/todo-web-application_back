@@ -1,10 +1,9 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import "mysql2";
-
 import { Sequelize } from "sequelize";
 import serverConfig from "./serverConfig";
+import "mariadb";
 
 const sequelize = new Sequelize({
   database: serverConfig.database,
@@ -12,7 +11,7 @@ const sequelize = new Sequelize({
   password: serverConfig.password,
   host: serverConfig.host,
   port: serverConfig.port ? Number(serverConfig.port) : undefined,
-  dialect: "mysql",
+  dialect: "mariadb",
   dialectOptions: {
     charset: "utf8mb4",
   },
