@@ -5,6 +5,8 @@ import { Sequelize } from "sequelize";
 import serverConfig from "./serverConfig";
 import "mariadb";
 
+const sslEnabled = String(process.env.DB_SSL || "").toLowerCase() === "true";
+
 const sequelize = new Sequelize({
   database: serverConfig.database,
   username: serverConfig.username,
@@ -14,7 +16,7 @@ const sequelize = new Sequelize({
   dialect: "mariadb",
   dialectOptions: {
     charset: "utf8mb4",
-    ssl: { rejectUnauthorized: true },
+    ...(sslEnabled ? { ssl: { rejectUnauthorized: true } } : {}),
   },
 });
 
