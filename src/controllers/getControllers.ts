@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import catchAsync from "../utils/catchAsync";
-import { Task } from "../models";
 import { taskServices } from "../services";
 
 const getTasks = catchAsync(async (req: Request, res: Response) => {
